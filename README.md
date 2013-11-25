@@ -1,0 +1,4 @@
+pypratico
+=========
+
+Python Prático
