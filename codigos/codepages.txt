@@ -1,0 +1,14 @@
+ASCII, 1963
+cp437, PC original, 1981, sem ã, õ
+cp850, DOS, europa ocidental, português
+MacRoman: Mac OS, 1984
+ISO-8859-1
+ISO-8859-15
+Windows-1252
+ISO-8859-2: polonês, húngaro, tcheco etc.
+ISO-8859-7: grego moderno
+ISO-8859-8: hebraico
+ISO-8859-5: cirilico: russo, búlgaro, sérvio etc.
+Windows-1251: extensão da Microsoft
+KOI8-R: Kod Obmena Informatsiey
+cp437, PC original
