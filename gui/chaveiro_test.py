@@ -3,12 +3,12 @@
 
 import unittest
 from os import urandom, path, remove
-from string import letters
+from string import ascii_letters
 
 from chaveiro import Chaveiro, cifrar, decifrar, SenhaIncorreta, ArquivoCorrompido
-    
+
 class TestesCifrarDecifrar(unittest.TestCase):
-    
+
     def setUp(self):
         self.byte = 'A'
         self.bytes100 = (letters * 4)[:100]
@@ -16,7 +16,7 @@ class TestesCifrarDecifrar(unittest.TestCase):
         self.senha = 'asdfghij'
 
     def test_cifrar_vetor(self):
-        ''' verificar que o vetor de inicialização de 10 bytes é incluído 
+        ''' verificar que o vetor de inicialização de 10 bytes é incluído
             no arquivo cifrado '''
         self.assertEqual(10, len(cifrar(self.senha, self.byte))-len(self.byte))
         self.assertEqual(10, len(cifrar(self.senha, self.bytes100))-len(self.bytes100))
@@ -40,7 +40,7 @@ class TestesCifrarDecifrar(unittest.TestCase):
         self.assertEqual(self.byte, decifrar(self.senha, cifrar(self.senha, self.byte)))
         self.assertEqual(self.bytes100, decifrar(self.senha, cifrar(self.senha, self.bytes100)))
         self.assertEqual(self.bytes10000, decifrar(self.senha, cifrar(self.senha, self.bytes10000)))
-        
+
 class TestesChaveiroIteravel(unittest.TestCase):
 
     def setUp(self):
@@ -52,7 +52,7 @@ class TestesChaveiroIteravel(unittest.TestCase):
     def test_iter(self):
         self.assertEqual([], [x for x in self.chaveiro0])
         self.assertEqual(self.itens9, [x for x in self.chaveiro9])
-        
+
     def test_incluir_excluir(self):
         self.chaveiro0.incluir('zzz')
         self.assertEqual(1, len([x for x in self.chaveiro0]))
@@ -68,7 +68,7 @@ class TestesChaveiroIteravel(unittest.TestCase):
         self.chaveiro9.excluir(0)
         itens = [i for i in self.chaveiro9]
         self.assertEqual('2', itens[0])
-        
+
 class TestesCarregar(unittest.TestCase):
     def setUp(self):
         self.chaveiro0 = Chaveiro('000')
@@ -80,7 +80,7 @@ class TestesCarregar(unittest.TestCase):
         self.itens9 = [str(i) for i in range(1,10)]
         self.chaveiro9 = Chaveiro('999')
         [self.chaveiro9.incluir(i) for i in self.itens9]
-    
+
     def test_carregar_adicionando(self):
         self.chaveiro9.carregar(self.chaves, sobrescrever=False)
         self.assertEqual(9+len(self.chaves), len(self.chaveiro9))
@@ -94,7 +94,7 @@ class TestesCarregar(unittest.TestCase):
             self.assertEqual(original, copia)
 
 class TestesChaveiroGravarLer(unittest.TestCase):
-    
+
     def setUp(self):
         self.chaveiro0 = Chaveiro('000', nome_arq='chaveiro0.dat')
         self.itens9 = [str(i) for i in range(1,10)]
@@ -103,10 +103,10 @@ class TestesChaveiroGravarLer(unittest.TestCase):
 
     def test_gravar(self):
         self.chaveiro0.gravar()
-        self.assert_(path.exists(self.chaveiro0.nome_arq))
+        self.assertTrue(path.exists(self.chaveiro0.nome_arq))
         self.chaveiro9.gravar()
-        self.assert_(path.exists(self.chaveiro9.nome_arq))
-        
+        self.assertTrue(path.exists(self.chaveiro9.nome_arq))
+
     def test_ler(self):
         self.chaveiro0.gravar()
         self.chaveiro_lido = Chaveiro('000', nome_arq='chaveiro0.dat')
@@ -116,7 +116,7 @@ class TestesChaveiroGravarLer(unittest.TestCase):
         self.chaveiro_lido = Chaveiro('999', nome_arq='chaveiro9.dat')
         self.chaveiro_lido.ler()
         self.assertEqual(self.itens9, [x for x in self.chaveiro_lido])
-        
+
     def test_senha_incorreta(self):
         self.chaveiro0.gravar()
         chaveiro_lido = Chaveiro(senha='', nome_arq='chaveiro0.dat')
@@ -124,7 +124,7 @@ class TestesChaveiroGravarLer(unittest.TestCase):
         self.chaveiro9.gravar()
         chaveiro_lido = Chaveiro(senha='ERRADA', nome_arq='chaveiro9.dat')
         self.assertRaises(SenhaIncorreta, chaveiro_lido.ler)
-        
+
     def test_detectar_arquivo_corrompido(self):
         self.chaveiro0.gravar()
         arq = file('chaveiro0.dat', 'ab')
@@ -132,7 +132,7 @@ class TestesChaveiroGravarLer(unittest.TestCase):
         arq.close()
         chaveiro_lido = Chaveiro('000', nome_arq='chaveiro0.dat')
         self.assertRaises(ArquivoCorrompido,chaveiro_lido.ler)
-                
+
     def tearDown(self):
         for nome_arq in 'chaveiro0.dat chaveiro9.dat'.split():
             if path.exists(nome_arq):

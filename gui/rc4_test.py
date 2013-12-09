@@ -4,7 +4,7 @@
 from rc4 import rc4
 
 '''
-Fonte dos vetores de teste: 
+Fonte dos vetores de teste:
     A Stream Cipher Encryption Algorithm "Arcfour"
     http://tools.ietf.org/html/draft-kaukonen-cipher-arcfour-03
 '''
@@ -107,18 +107,18 @@ TEST_VECTORS = [
             0xbc, 0x55, 0x3f, 0x33, 0x9e, 0xb1, 0xa4, 0xc1,
             0xaf, 0x5f, 0x6a, 0x54, 0x7f),
         }
-    ),          
+    ),
 ]
 
 for name, vectors in TEST_VECTORS:
-    print name,
-    entrada = ''.join([chr(n) for n in vectors['Plain Text']])
-    saida = ''.join([chr(n) for n in vectors['Cipher Text']])
-    chave = ''.join([chr(n) for n in vectors['Key']])
+    print(name, end='')
+    entrada = bytearray(vectors['Plain Text'])
+    saida = bytearray(vectors['Cipher Text'])
+    chave = bytearray(vectors['Key'])
     assert saida == rc4(chave, entrada)
     assert entrada == rc4(chave, saida)
-    print 'OK'
-    
+    print(' --> OK')
+
 
 
 
