@@ -1,14 +1,33 @@
-#!/usr/bin/env python
-# coding: utf-8
+#!/usr/bin/env python3
+
+"""
+
+A Classe chaveiro é uma interface de alto nível para ler e gravar arquivos
+cifrados contendo listas de chaves.
+
+    >>> from chaveiro import Chaveiro
+    >>> chaves = Chaveiro('1234')
+    >>> chaves.ler()
+    >>> len(chaves)
+    47
+    >>> chaves[:3]  #doctest: +NORMALIZE_WHITESPACE
+    [['Learn Chinese Characters', 'http://zhongwen.com/', 'admin', 'l>:&=+'],
+     ['famfamfam.com: Home', 'http://www.famfamfam.com/', 'lramalho', 'y=SCKu'],
+     ['G-Portugol', 'http://gpt.berlios.de/', 'lramalho', 'z&>45']]
+
+Cada chave é formada por 4 atributos: título, endereço, login e senha:
+
+    >>> chaves[10]  #doctest: +NORMALIZE_WHITESPACE
+    ['The Public DNS Service', 'http://soa.granitecanyon.com/',
+     'lramalho', 'awxn:t0']
+
+"""
 
 import pickle
 import zlib
 from os import urandom, rename, remove
 
-try: # importar SHA-1 segundo a versao do Python
-    from hashlib import sha1 # Python 2.5.x
-except ImportError:
-    from sha import new as sha1 # Python 2.4.x
+from hashlib import sha1 # Python 2.5.x
 
 from rc4 import rc4
 
@@ -63,6 +82,9 @@ class Chaveiro(object):
     def __len__(self):
         return len(self.chaves)
 
+    def __getitem__(self, indice):
+        return self.chaves[indice]
+
     def incluir(self, chave, posicao=None):
         if posicao is None:
             self.chaves.append(chave)
@@ -115,4 +137,12 @@ class Chaveiro(object):
         except zlib.error as erro:
             raise SenhaIncorreta()
         else:
-            self.chaves = pickle.loads(octetos)
+            self.chaves = pickle.loads(octetos, encoding=CODIF)
+
+if __name__ == "__main__":
+    import doctest
+    res = doctest.testmod()
+    if res.failed == 0:
+        print('OK.', res)
+    else:
+        print('FALHAS!', res)

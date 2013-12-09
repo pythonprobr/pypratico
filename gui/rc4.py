@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
+#!/usr/bin/env python3
 
 def rc4(chave, entrada, loops=1):
     ''' Algoritmo compatível com o RC4 '''
