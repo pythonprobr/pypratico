@@ -142,6 +142,8 @@ class Chaveiro(object):
 if __name__ == "__main__":
     import doctest
     res = doctest.testmod()
+
+    # para fazer uma saida explícita
     if res.failed == 0:
         print('OK.', res)
     else:
