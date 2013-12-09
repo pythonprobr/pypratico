@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import unittest
-from os import urandom, path, remove
+import os
 from string import ascii_letters
 
 from chaveiro import Chaveiro, cifrar, decifrar, SenhaIncorreta, ArquivoCorrompido
@@ -10,9 +10,9 @@ from chaveiro import Chaveiro, cifrar, decifrar, SenhaIncorreta, ArquivoCorrompi
 class TestesCifrarDecifrar(unittest.TestCase):
 
     def setUp(self):
-        self.byte = 'A'
-        self.bytes100 = (letters * 4)[:100]
-        self.bytes10000 = urandom(10000)
+        self.byte = b'A'
+        self.bytes100 = bytes((ascii_letters * 4)[:100], 'utf-8')
+        self.bytes10000 = os.urandom(10000)
         self.senha = 'asdfghij'
 
     def test_cifrar_vetor(self):
@@ -103,9 +103,9 @@ class TestesChaveiroGravarLer(unittest.TestCase):
 
     def test_gravar(self):
         self.chaveiro0.gravar()
-        self.assertTrue(path.exists(self.chaveiro0.nome_arq))
+        self.assertTrue(os.path.exists(self.chaveiro0.nome_arq))
         self.chaveiro9.gravar()
-        self.assertTrue(path.exists(self.chaveiro9.nome_arq))
+        self.assertTrue(os.path.exists(self.chaveiro9.nome_arq))
 
     def test_ler(self):
         self.chaveiro0.gravar()
@@ -127,16 +127,16 @@ class TestesChaveiroGravarLer(unittest.TestCase):
 
     def test_detectar_arquivo_corrompido(self):
         self.chaveiro0.gravar()
-        arq = file('chaveiro0.dat', 'ab')
-        arq.write('x')
+        arq = open('chaveiro0.dat', 'ab')
+        arq.write(b'x')
         arq.close()
         chaveiro_lido = Chaveiro('000', nome_arq='chaveiro0.dat')
         self.assertRaises(ArquivoCorrompido,chaveiro_lido.ler)
 
     def tearDown(self):
         for nome_arq in 'chaveiro0.dat chaveiro9.dat'.split():
-            if path.exists(nome_arq):
-                remove(nome_arq)
+            if os.path.exists(nome_arq):
+                os.remove(nome_arq)
 
 
 if __name__ == '__main__':
