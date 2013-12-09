@@ -1,6 +1,6 @@
 """
-O mais breve programa Tkinter que faz alguma coisa, escrito da forma
-mais breve que eu consegui, mas necessariamente a melhor.
+O mais breve programa Tkinter que faz alguma coisa, escrito
+com uma classe para representar a janela principal.
 """
 
 import tkinter
