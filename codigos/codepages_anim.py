@@ -27,7 +27,7 @@ ESTILO_ROTULO = dict(anchor='center', font='courier 24', fill='gray')
 ESTILO_CAR = dict(anchor='center', font='times 32', fill='black')
 ESTILO_LEGENDA = dict(anchor='w', font='helvetica 32', fill='black')
 
-CODEPAGES = ['ASCII','EBCDIC',
+CODEPAGES = ['ASCII',
     'cp437', 'cp850', 'MacRoman', 'ISO-8859-1',
     'ISO-8859-15', 'Windows-1252', 'ISO-8859-2',  'ISO-8859-7',
     'ISO-8859-8', 'ISO-8859-5', 'Windows-1251', 'KOI8-R', 'cp437', ]

@@ -1,30 +1,26 @@
 # example from section 4.2 of the book
 # "Modern Tkinter for Busy Python Programmers
 
-import tkinter as tk
-from tkinter import N, W, E, S
-from tkinter import ttk
+from tkinter import *
+from tkinter import ttk  # ttk nao está no __all__ do tkinter
 
 def calculate(*args):
     try:
         value = float(feet.get())
-        meters.set(format(value * 12 * 0.0254, 'f'))
+        meters.set((0.3048 * value * 10000.0 + 0.5)/10000.0)
     except ValueError:
         pass
 
-root = tk.Tk()
+root = Tk()
 root.title("Feet to Meters")
 
 mainframe = ttk.Frame(root, padding="3 3 12 12")
-#mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-#???
-#mainframe.columnconfigure(0, weight=1)
-#mainframe.rowconfigure(0, weight=1)
+mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+mainframe.columnconfigure(0, weight=1)
+mainframe.rowconfigure(0, weight=1)
 
-mainframe.pack()
-
-feet = tk.StringVar()
-meters = tk.StringVar()
+feet = StringVar()
+meters = StringVar()
 
 feet_entry = ttk.Entry(mainframe, width=7, textvariable=feet)
 feet_entry.grid(column=2, row=1, sticky=(W, E))
