@@ -1,0 +1,7 @@
+
+
+Próximos passos
+===============
+
+- Onde aprender mais sobre Python?
+-  " " " Django?
