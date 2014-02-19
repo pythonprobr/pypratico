@@ -7,7 +7,7 @@ def rot13(texto):
     saida = ''
     for letra in texto:
         posicao = ord(letra) - ord('A')
-        saida += chr(posicao+13 % 26 + ord('A'))
+        saida += chr((posicao+13) % 26 + ord('A'))
 
     return saida
 
