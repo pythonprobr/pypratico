@@ -1,5 +1,5 @@
-# coding: utf-8
 '''
+Referencia sobre o canvas:
 http://effbot.org/tkinterbook/canvas.htm
 '''
 
@@ -133,7 +133,7 @@ class Janela(tk.Tk):
                     if not unicar:
                         continue
                     if i == 8 and j == 5 and unicar == '\x85':
-                        continue # ignorar gremlim na forma de Á dentro de um quadrado
+                        continue # ignorar gremlim na forma de &Aacute; dentro de um quadrado
                     glifo = Glifo.ativos.get(unicar)
                     if glifo is None:
                         glifo = Glifo(self.canvas, unicar, 17.5*CEL, 1.5*CEL, color=self.cor())
@@ -167,7 +167,7 @@ class Janela(tk.Tk):
             c.create_line(CEL, (i+1)*CEL, 17*CEL, (i+1)*CEL)
             c.create_line((i+1)*CEL, CEL, (i+1)*CEL, 17*CEL)
             if i < 16:
-                # rótulo
+                # rotulo
                 c.create_text((i+1.6)*CEL, CEL/2, text='_%X'%i, **ESTILO_ROTULO)
                 c.create_text(CEL/2, (i+1.5)*CEL, text='%X0'%i, **ESTILO_ROTULO)
                 for j in range(16):
