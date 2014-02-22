@@ -7,17 +7,24 @@ from __future__ import print_function
 
 import sys
 
-PY2 = sys.version_info[0] == 2
+py_ver = sys.version_info[0]
+if py_ver >= 3:
+    unichr = chr
 
 def int2byte(i):
-    return chr(i) if PY2 else bytes([i])
+    return bytes([i]) if py_ver >= 3 else chr(i)
 
 cod_saida = sys.stdout.encoding
-print('Encoding:', cod_saida)
 
-for i in range(32, 256):
-    octeto = int2byte(i)
-    car_uni = octeto.decode(cod_saida)
-    print(car_uni, end=' ')
-    if i % 32 == 31:
+if cod_saida.upper().startswith('UTF'):
+    print('Terminal %s, exibindo caracteres Unicode U+0020 a U+00FF' % cod_saida)
+    cars_uni = [chr(i) for i in range(0x20, 0xff)]
+else:
+    print('Terminal %s, exibindo caracteres 0x20 a 0xff' % cod_saida)
+    cars_uni = [int2byte(i).decode(cod_saida) for i in range(0x20, 0xff)]
+
+for car in cars_uni:
+    print(car, end=' ')
+    if ord(car) % 32 == 31:
         print()
+print()
