@@ -52,8 +52,9 @@ class TestarGerarAmostra(unittest.TestCase):
         """
         80 <undefined>
         """
-        codificada = codificar_amostra(self.latin1, 'cp437', b'!')
-        self.assertEqual(b'!', codificada[128-32])
+        replacement_char = b'!'
+        codificada = codificar_amostra(self.latin1, 'cp437', replacement_char)
+        self.assertEqual(replacement_char, codificada[128-32])
 
 
     def teste_codificar_amostra_cp850(self):
