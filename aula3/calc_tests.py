@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
+from unittest.mock import Mock
 
 
 class Soma():
@@ -41,23 +42,29 @@ class CalculadoraTests(unittest.TestCase):
     def test_calcular(self):
         calculadora = Calculadora()
         SINAL_ESCOLHIDO = '#'
-        calculadora.sinal_escolhido = SINAL_ESCOLHIDO
         RESULTADO_ESPERADO = 8
 
-        class OperacaoMock():
-            sinal = SINAL_ESCOLHIDO
+        # class OperacaoMock():
+        #     sinal = SINAL_ESCOLHIDO
+        #
+        #     def calcular(self, param, param2):
+        #         self.param = param
+        #         self.param2 = param2
+        #         return RESULTADO_ESPERADO
 
-            def calcular(self, param, param2):
-                self.param = param
-                self.param2 = param2
-                return RESULTADO_ESPERADO
+        mock = Mock()
+        calculadora.sinal_escolhido = SINAL_ESCOLHIDO
+        mock.sinal = SINAL_ESCOLHIDO
+        mock.calcular = Mock(return_value=RESULTADO_ESPERADO)
 
-        mock = OperacaoMock()
         calculadora.incluir_operacao(mock)
         resultado = calculadora.calcular(2, 3)
         self.assertEqual(RESULTADO_ESPERADO, resultado)
-        self.assertEqual(2,mock.param)
-        self.assertEqual(3,mock.param2)
+        mock.calcular.assert_called_once_with(2, 3)
+
+        # mock.um_metodo(4, 5, 'blah')
+        # mock.um_metodo(4, 5, 'blah')
+        # mock.um_metodo.assert_called_once_with(4, 5, 'blah')
 
 
 if __name__ == '__main__':
